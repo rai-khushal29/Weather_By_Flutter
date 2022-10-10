@@ -34,18 +34,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String forecast_ico = "";
-  String time="";
-  String city_name="";
-  String temp="";
-  String ico_url="";
-  String desc="";
-  String fl="";
-  List<Forecast_Model> _forecast_list =[];
+  String time = "";
+  String city_name = "";
+  String temp = "";
+  String ico_url = "";
+  String desc = "";
+  String fl = "";
+  List<Forecast_Model> _forecast_list = [];
   String temp_max = 'temp+max';
   String temp_min = 'temp_min';
   String pressure = 'pressure';
   String humidity = 'humidity';
-  String q = "Jaipur"; // city input
+  String q = "Jodhpur"; // city input
   late String temp_city; // If city is not found then restore the value
   TextEditingController tc = TextEditingController();
 
@@ -103,8 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             desc: desc,
             pressure: pressure,
             humidity: humidity,
-            forecast_list :_forecast_list
-        );
+            forecast_list: _forecast_list);
         print(city_name);
         print(time);
       } else if (response.statusCode == 404) {
@@ -112,17 +111,17 @@ class _MyHomePageState extends State<MyHomePage> {
         showCupertinoDialog(
             context: context,
             builder: (BuildContext context) => CupertinoAlertDialog(
-              title: Text("Weather"),
-              content: Text("Item Not Found"),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  child: Text("OK"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ));
+                  title: Text("Weather"),
+                  content: Text("Item Not Found"),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ));
       } else {
         throw (Exception);
       }
@@ -130,18 +129,18 @@ class _MyHomePageState extends State<MyHomePage> {
       showCupertinoDialog(
           context: context,
           builder: (BuildContext context) => CupertinoAlertDialog(
-            title: Text("Weather"),
-            content: Text(
-                "Check Your Internet Connection\n" + Exception.toString()),
-            actions: <Widget>[
-              CupertinoDialogAction(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          ));
+                title: Text("Weather"),
+                content: Text(
+                    "Check Your Internet Connection\n" + Exception.toString()),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ));
     }
     setState(() => {});
   }
@@ -162,15 +161,27 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 20,
             ),
             onTap: () {
-
               /* callapi();*/
               //setState(() => Future(()=> callapi()));
             },
           ),
-          middle: Icon(
-            Icons.cloud,
-            size: 35,
-          ),
+          middle: GestureDetector(
+              child: Icon(
+            CupertinoIcons.cloud_fill,
+            size: 40,
+          ),onTap: (){
+                showCupertinoDialog(context: context, builder: (BuildContext context) => CupertinoAlertDialog(
+                  title: Text("About Weather"),
+                  content: Text("This is minor project \n Developed by Khushal Roop Rai"),
+                    actions: <Widget>[
+                CupertinoDialogAction(
+                child: Text("OK"),
+                  onPressed: () {
+
+                  Navigator.pop(context);
+                  },
+                )]));
+          },),
           trailing: GestureDetector(
             child: Icon(
               CupertinoIcons.settings,
@@ -180,33 +191,33 @@ class _MyHomePageState extends State<MyHomePage> {
               showCupertinoDialog(
                   context: context,
                   builder: (BuildContext context) => CupertinoAlertDialog(
-                    title: Text("Change City"),
-                    content: Card(
-                        color: Colors.transparent,
-                        elevation: 5,
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              CupertinoTextField(
-                                controller: tc,
-                              )
-                            ],
-                          ),
-                        )),
-                    actions: <Widget>[
-                      CupertinoDialogAction(
-                        child: Text("OK"),
-                        onPressed: () {
-                          if (!tc.text.isEmpty) {
-                            q = tc.text;
-                          }
-                          callapi();
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ));
+                        title: Text("Change City"),
+                        content: Card(
+                            color: Colors.transparent,
+                            elevation: 5,
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                children: [
+                                  CupertinoTextField(
+                                    controller: tc,
+                                  )
+                                ],
+                              ),
+                            )),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            child: Text("OK"),
+                            onPressed: () {
+                              if (!tc.text.isEmpty) {
+                                q = tc.text;
+                              }
+                              callapi();
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ));
             },
           ),
         ),
@@ -221,8 +232,6 @@ class _MyHomePageState extends State<MyHomePage> {
             desc: desc,
             pressure: pressure,
             humidity: humidity,
-            forecast_list :_forecast_list
-        )
-       );
+            forecast_list: _forecast_list));
   }
 }
