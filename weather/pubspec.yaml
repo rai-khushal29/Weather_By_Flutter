@@ -28,7 +28,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   http: ^0.13.5
+  #awesome_notifications: ^0.7.2
   google_fonts: ^3.0.1
+  fluent_ui:
+    git: https://github.com/bdlukaa/fluent_ui.git
   flutter:
     sdk: flutter
 
