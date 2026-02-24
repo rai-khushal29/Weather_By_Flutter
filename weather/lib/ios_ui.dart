@@ -56,7 +56,7 @@ class _ios_uiState extends State<ios_ui> {
             ),
             child: Image.network(
               (widget.city_name == "Jodhpur")
-                  ? 'https://www.wtravelmagazine.com/wp-content/uploads/2018/12/23.28.2-Traditional-blue-windows-and-wall-in-Blue-City-Jodhpur.jpg'
+                  ? 'https://images.unsplash.com/photo-1569001852726-323fd51b26f3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                   : (widget.city_name == "Jaipur")
                       ? 'https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80'
                       : (widget.city_name == "Mumbai")

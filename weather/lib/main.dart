@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fluent_ui/fluent_ui.dart' as fluent;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/ios_ui.dart';
 import 'package:http/http.dart' as http;
@@ -19,19 +20,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
+
+    return CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Weather',
+      home: const MyHomePage(title: 'Weather'),
+    );
+
+    /*if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
       return CupertinoApp(
         debugShowCheckedModeBanner: false,
         title: 'Weather',
         home: const MyHomePage(title: 'Weather'),
       );
-    } else {
+    }
+    else if(kIsWeb){
+      return CupertinoApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Weather',
+        home: const MyHomePage(title: 'Weather'),
+      );
+    }
+    else {
       return fluent.FluentApp(
         debugShowCheckedModeBanner: false,
         title: 'Weather',
         home: const MyWindowsHomePage(title: 'Weather'),
       );
-    }
+    }*/
+    /*return fluent.FluentApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Weather',
+      home: const MyWindowsHomePage(title: 'Weather'),
+    );*/
   }
 }
 
@@ -171,6 +192,7 @@ class _MyWindowsHomePageState extends State<MyWindowsHomePage> {
     return fluent.NavigationView(
       pane: fluent.NavigationPane(
         selected: _pane_one,
+        header: Text("Weather"),
         displayMode: fluent.PaneDisplayMode.compact,
         onChanged: (index) {
           setState(() {
@@ -383,7 +405,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   builder: (BuildContext context) => CupertinoAlertDialog(
                           title: Text("About Weather"),
                           content: Text(
-                              "This is minor project \n Developed by Khushal Roop Rai"),
+                              "Developed by:- \n Khushal Roop Rai\nVijay Kumar"),
                           actions: <Widget>[
                             CupertinoDialogAction(
                               child: Text("OK"),

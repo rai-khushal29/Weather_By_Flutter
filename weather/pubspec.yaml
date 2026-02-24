@@ -27,9 +27,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  http: ^0.13.5
+  http: ^1.2.1
   #awesome_notifications: ^0.7.2
-  google_fonts: ^3.0.1
+  google_fonts: ^6.2.1
   fluent_ui:
     git: https://github.com/bdlukaa/fluent_ui.git
   flutter:
