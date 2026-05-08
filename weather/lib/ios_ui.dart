@@ -1,5 +1,6 @@
 import 'dart:ui';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'Forecast_Model.dart';
 
 class ios_ui extends StatefulWidget {
+
   String city_name = "cityname";
   String temp = "temp";
   String ico_url = "ico_url";
@@ -42,7 +44,34 @@ class _ios_uiState extends State<ios_ui> {
     // TODO: implement initState
     super.initState();
   }
+  Future<String> _getCityImageUrl(String cityName) async {
+    try {
+      final uri = Uri.parse(
+          'https://en.wikipedia.org/api/rest_v1/page/summary/${Uri.encodeComponent(cityName)}'
+      );
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final imageUrl = data['thumbnail']?['source'] ?? _getFallbackUrl(cityName);
+        return imageUrl;
+      }
+    } catch (e) {
+      return _getFallbackUrl(cityName);
+    }
+    return _getFallbackUrl(cityName);
+  }
 
+  String _getFallbackUrl(String cityName) {
+    const Map<String, String> cityImages = {
+      "Jodhpur":   "https://images.unsplash.com/photo-1569001852726-323fd51b26f3?w=1200&fit=crop",
+      "Jaipur":    "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=1200&fit=crop",
+      "Mumbai":    "https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=1200&fit=crop",
+      "Jaisalmer": "https://images.unsplash.com/photo-1589510337472-4307ab0087f7?w=1200&fit=crop",
+      "London":    "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=1200&fit=crop",
+    };
+    return cityImages[cityName] ??
+        "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60";
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -54,7 +83,31 @@ class _ios_uiState extends State<ios_ui> {
               sigmaX: 3,
               sigmaY: 3,
             ),
-            child: Image.network(
+            child: FutureBuilder<String>(
+              future: _getCityImageUrl(widget.city_name),
+              builder: (context, snapshot) {
+                final url = snapshot.data ?? _getFallbackUrl(widget.city_name);
+                return Image.network(
+                  url,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  errorBuilder: (context, error, stackTrace) => Image.network(
+                    _getFallbackUrl(widget.city_name),
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+       /* ClipRect(
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(
+              sigmaX: 3,
+              sigmaY: 3,
+            ),
+            child:Image.network(
               (widget.city_name == "Jodhpur")
                   ? 'https://images.unsplash.com/photo-1569001852726-323fd51b26f3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                   : (widget.city_name == "Jaipur")
@@ -69,7 +122,7 @@ class _ios_uiState extends State<ios_ui> {
               fit: BoxFit.fitHeight,
             ),
           ),
-        ),
+        ),*/
         SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Padding(
@@ -159,7 +212,7 @@ class _ios_uiState extends State<ios_ui> {
                               color: (widget.city_name == "Jodhpur")
                                   ? Color(0x971A237E)
                                   : (widget.city_name == 'Jaipur')
-                                      ? Color(0x71FF00AD)
+                                      ? Color(0x71C63295)
                                       : (widget.city_name == "Jaisalmer")
                                           ? Color(0x71FFAD02)
                                           : Color(0x35FFFFFF),
